@@ -1,0 +1,142 @@
+// ./components/Counter.nl
+
+component Counter {
+    props {
+        initialCount: Int
+    }
+
+    state {
+        count: Int = initialCount
+    }
+
+    html {
+        <div>
+            <button onClick={decrement}>-</button>
+            <span>{count}</span>
+            <button onClick={increment}>+</button>
+        </div>
+    }
+
+    methods {
+        increment() {
+            count += 1
+        }
+
+        decrement() {
+            count -= 1
+        }
+    }
+}
+
+
+// ./components/Footer/Footer.nl
+
+js {
+    // here will be logic
+
+    (count = 0) => {
+        increment = () => count += 1
+        decrement = () => count -= 1
+    }
+
+    goHome = () => {
+        router.go('Home')
+    }
+
+    //or goHome = router.go('Home')
+}
+
+html {
+    <nav>
+        <ul>
+            <li @click=goHome() class=home >Home</li>
+            <li>About</li>
+            <ul>
+                {items.map(item => (
+                    <li class={item.active ? 'active' : ''}>{item.name}</li>
+                ))}
+            </ul>
+        </ul>
+    </nav>
+    <CustomComponent @customEvent={handleCustomEvent} />
+}
+
+style {
+    // here will be style scoped to just this component
+    ul{
+        width: 100%
+
+        // comments here will be available as well
+        // li is scoped to this component (file) and is scoped to ul
+        // which means is compiled to ul li {}
+        li {
+            background-color: grey;
+            // you can both end nl css with ; or just new line
+        }
+    }
+}
+
+// ./components/Navbar/Navbar.nl
+
+component Navbar {
+    html {
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+            </ul>
+        </nav>
+    }
+}
+
+
+// ./main.nl
+
+import { Navbar } from "./components/Navbar/Navbar.newlang"
+import { Footer } from "./components/Footer/Footer.newlang"
+
+component App {
+    html {
+        <Navbar />
+        <router-outlet />
+        <Footer />
+    }
+}
+
+
+// ./styles/globalStyles.nl
+
+styles Navbar {
+    scoped {
+        nav {
+            background-color: #f5f5f5;
+            ul {
+                display: flex;
+                list-style-type: none;
+            }
+        }
+    }
+}
+
+
+// ./views/About.nl
+
+
+
+// ./views/Home.nl
+
+
+
+html{
+    <ChildComponent>
+        <template #header>
+            <h1>Header slot content</h1>
+        </template>
+        <template #footer>
+            <h2>Footer slot content</h2>
+        </template>
+
+        <input type="text" [(value)]={inputValue} />
+    </ChildComponent>
+}
+
