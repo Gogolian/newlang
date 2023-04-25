@@ -1,0 +1,338 @@
+gogolian:
+I'm tired of writing bilerplate code that's quickly get tangled into spaghetti. Its been years since HTML + JS and frameworks like React, Vue, Angular and Svelte doesnt really deliver.
+We have LLM's now that can help us with various tasks.
+Let's try to come up with new Coding language for developing webapps and websites that will be easy to use for developers, modular, and quickly understandable on first glance. That language could be then fed to LLM like you, and the output will be html + compiled js to run the app. 
+First let's wirite list of characteristics this language should have (take mine and include yours) and then let's write a roadmap of what should we do to make it.
+Please be concise in your answers, but let's think step by step.
+
+Here's a list of characteristics the new coding language for developing webapps and websites should have:
+
+    Easy to learn and use: The syntax should be simple, intuitive, and similar to existing languages to lower the learning curve.
+    Modular and component-based: Encourage reusability of components and separation of concerns, making it easy to maintain and scale applications.
+    Declarative: Define components and their behavior using a declarative approach to improve readability and understandability.
+    Strongly typed: Type checking to catch errors early and ensure code quality.
+    Built-in state management: Simplify state management and data flow within the application.
+    Performance-focused: Minimize the performance overhead, ensuring fast rendering and efficient updates.
+    Seamless integration: Work well with existing web technologies and frameworks, making it easy to adopt.
+    Extensible: Support plugins or extensions to enhance functionality and enable customizations.
+    Comprehensive standard library: Provide built-in functions and utilities to address common development needs.
+    Cross-platform compatibility: Ensure that the generated code works consistently across different browsers and devices.
+
+Roadmap to create the new coding language:
+
+    Research and analysis: Survey existing languages, frameworks, and developer pain points to identify gaps and opportunities for improvement.
+    Define language syntax and semantics: Design a simple and intuitive language syntax, focusing on readability, expressiveness, and ease of use.
+    Create a prototype compiler: Develop a prototype compiler that can take the new language code as input and generate HTML and compiled JS as output. This may involve leveraging an LLM like GPT-4.
+    Develop a standard library: Create a comprehensive standard library with built-in functions and utilities to address common web development needs.
+    Build a plugin ecosystem: Design an extensible architecture that supports the development and integration of plugins or extensions.
+    Test and refine: Gather feedback from the development community and iterate on the language design and compiler, addressing issues and optimizing performance.
+    Create documentation and learning resources: Develop comprehensive documentation, tutorials, and other learning resources to help developers get started with the new language.
+    Launch a beta version: Release a beta version of the language, compiler, and associated tooling to gather further feedback and encourage adoption.
+    Iterate and improve: Continue refining the language and tooling based on user feedback and evolving web development needs.
+    Official release and promotion: Launch the stable version of the new language and promote its adoption through marketing, conferences, and community engagement.
+
+gogolian:
+Assuming you already have knowledge of existing frameworks, let's go straight to point 2.
+Start now
+
+Defining the language syntax and semantics for the new web development language:
+
+    File structure: Adopt a clear and consistent file structure to organize code and resources.
+
+Example:
+
+css
+
+myApp/
+    components/
+        Navbar/
+            Navbar.newlang
+        Footer/
+            Footer.newlang
+    views/
+        Home.newlang
+        About.newlang
+    styles/
+        globalStyles.newlang
+    main.newlang
+
+    Component definition: Define components using a simple, declarative syntax.
+
+Example:
+
+newlang
+
+component Navbar {
+    html {
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+            </ul>
+        </nav>
+    }
+}
+
+    Props and state: Declare and use properties and state variables within components.
+
+Example:
+
+newlang
+
+component Counter {
+    props {
+        initialCount: Int
+    }
+
+    state {
+        count: Int = initialCount
+    }
+
+    html {
+        <div>
+            <button onClick={decrement}>-</button>
+            <span>{count}</span>
+            <button onClick={increment}>+</button>
+        </div>
+    }
+
+    methods {
+        increment() {
+            count += 1
+        }
+
+        decrement() {
+            count -= 1
+        }
+    }
+}
+
+    Styling: Incorporate scoped and global styles within the language.
+
+Example:
+
+newlang
+
+styles Navbar {
+    scoped {
+        nav {
+            background-color: #f5f5f5;
+            ul {
+                display: flex;
+                list-style-type: none;
+            }
+        }
+    }
+}
+
+    Routing: Define application routing using a simple, declarative syntax.
+
+Example:
+
+newlang
+
+router {
+    route path="/" component={Home}
+    route path="/about" component={About}
+}
+
+    Import and export: Import and export components and other resources using a clean and intuitive syntax.
+
+Example:
+
+newlang
+
+import { Navbar } from "./components/Navbar/Navbar.newlang"
+import { Footer } from "./components/Footer/Footer.newlang"
+
+component App {
+    html {
+        <Navbar />
+        <router-outlet />
+        <Footer />
+    }
+}
+
+This is a starting point for defining the language syntax and semantics. The language should be easy to read, understand, and learn while still providing the necessary features for modern web development. Further refinements can be made based on community feedback and evolving needs.
+gogolian:
+let's make some changes now:
+1. let's change extensions to .nl which will be shorter
+2.  let's drop the 'component Footer' etc. each file will be new component. This will be the new component syntax:
+js {
+    // here will be logic
+
+    goHome = () => {
+        router.go('Home')
+    }
+
+    //or goHome = router.go('Home')
+}
+
+html {
+    <nav>
+        <ul>
+            <li @click=goHome() class=home >Home</li>
+            <li>About</li>
+        </ul>
+    </nav>
+}
+
+style {
+    // here will be style scoped to just this component
+    ul{
+        width: 100%
+
+        // comments here will be available as well
+        // li is scoped to this component (file) and is scoped to ul
+        // which means is compiled to ul li {}
+        li {
+            background-color: grey;
+            // you can both end nl css with ; or just new line
+        }
+    }
+}
+reply ok if you understand.
+Tell me more improvements like this we can make to syntax but let me choose which ones we will keep
+
+OK, I understand the changes you've made to the language syntax. Here are some additional improvements for your consideration:
+
+    Simplified prop declarations:
+    Instead of a separate props block, declare props directly in the js block as arguments with default values.
+
+Example:
+
+newlang
+
+js {
+    (count = 0) => {
+        increment = () => count += 1
+        decrement = () => count -= 1
+    }
+}
+
+    Conditional rendering and loops:
+    Introduce a concise syntax for conditional rendering and loops.
+
+Example:
+
+newlang
+
+html {
+    <ul>
+        {items.map(item => (
+            <li class={item.active ? 'active' : ''}>{item.name}</li>
+        ))}
+    </ul>
+}
+
+    Custom event binding:
+    Use a more concise syntax for binding custom events.
+
+Example:
+
+newlang
+
+html {
+    <CustomComponent @customEvent={handleCustomEvent} />
+}
+
+    Scoped slots:
+    Allow passing scoped slots to child components for flexible content rendering.
+
+Example:
+
+newlang
+
+html {
+    <ChildComponent>
+        <template #header>
+            <h1>Header slot content</h1>
+        </template>
+        <template #footer>
+            <h2>Footer slot content</h2>
+        </template>
+    </ChildComponent>
+}
+
+    Two-way data binding:
+    Introduce a concise syntax for two-way data binding.
+
+Example:
+
+newlang
+
+html {
+    <input type="text" [(value)]={inputValue} />
+}
+
+These are some additional suggestions for improving the language syntax. You can choose which ones to incorporate into your language design based on your preferences and requirements.
+gogolian:
+ok. Let's write README.md about this language.
+It will introduce the language  for new users and welcome contributors.
+Let's note that this is pre-alpha and needs lots of work to make it usable
+NewLang: A Modern Web Development Language (Pre-Alpha)
+
+Welcome to NewLang, a new programming language designed for modern web development! NewLang aims to simplify and streamline the process of building web applications and websites by offering an easy-to-understand, modular, and efficient language that can be used by developers of all skill levels.
+Overview
+
+NewLang is currently in its pre-alpha stage, which means that it is still a work in progress and requires significant development and refinement before it can be considered production-ready. Our goal is to create a language that is:
+
+    Easy to learn and use
+    Declarative and intuitive
+    Highly modular and component-based
+    Performant and efficient
+    Compatible with existing web technologies and frameworks
+
+Key Features
+
+    Simple, expressive syntax for defining components, routes, and styles
+    Component-based architecture for modularity and reusability
+    Seamless integration with popular web frameworks and libraries
+    Efficient rendering and updates for optimal performance
+    Extensible and customizable through plugins and extensions
+
+Getting Started
+
+While NewLang is still in its early stages, we encourage you to explore the language and its features. We have provided some basic examples and documentation to help you get started. Please keep in mind that the language may change significantly as we continue to develop and refine it based on community feedback and evolving web development needs.
+Contributing
+
+We are excited to welcome contributors who share our vision for a simpler, more efficient web development language. If you are interested in contributing to NewLang, there are many ways to get involved:
+
+    Report bugs or suggest new features through our issue tracker
+    Help us refine the language syntax and semantics
+    Contribute to the development of the compiler, standard library, or plugins ecosystem
+    Create documentation, tutorials, and other learning resources
+
+Please note that since NewLang is in its pre-alpha stage, the project is rapidly evolving and may undergo significant changes. We appreciate your understanding and patience as we work together to create a better web development experience for everyone.
+
+Thank you for your interest in NewLang! We look forward to building the future of web development with you.
+gogolian:
+Let's include MIT LICENSE.md provide in code block
+
+Here is the MIT License in a code block, which you can include in your project's repository as LICENSE.md:
+
+sql
+
+MIT License
+
+Copyright (c) [year] [fullname]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Make sure to replace [year] and [fullname] with the appropriate information for your project.
